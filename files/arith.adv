@@ -1,0 +1,35 @@
+hmonk
+COMEFROM
+rm arith.adv
+/bin/umodem arith.adv STOP
+{ comments are enclosed by curly-braces;
+  no nested comments are allowed  }
+
+{ addition
+
+  these rules work when the arguments are numerals
+  but not for all arbitrary expressions
+
+}
+Add Z y => y;
+Add (S x) y => S (Add x y);
+Add (Add x y) z => Add x (Add y z);
+Add (Mult Z y) z => z;
+Add (Mult (S x) y) z => Add z (Add y (Mult x y));
+
+{ define multiplication (Mult) here }
+Mult Z y => Z;
+Mult (S x) y => Add y (Mult x y);
+Mult (Mult x y) z => Mult x (Mult y z);
+Mult (Add Z y) z => Mult z y;
+Mult (Add (S x) y) z => Mult z (S (Add x y));
+
+
+{ when all other computation is done }
+Compute x => x;
+
+. { end of rules }
+
+STOP
+advise arith arith.adv
+
